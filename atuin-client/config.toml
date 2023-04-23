@@ -64,6 +64,12 @@
 ## number of context lines to show when scrolling by pages
 # scroll_context_lines = 1
 
+## environment variables to save
+## empty by default
+# env_vars = [
+#   "SHELL"
+# ]
+
 ## prevent commands matching any of these regexes from being written to history.
 ## Note that these regular expressions are unanchored, i.e. if they don't start
 ## with ^ or end with $, they'll match anywhere in the command.

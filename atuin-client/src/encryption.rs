@@ -131,6 +131,7 @@ pub fn decrypt(mut encrypted_history: EncryptedHistory, key: &Key) -> Result<His
             hostname: history.hostname,
             timestamp: history.timestamp,
             deleted_at: None,
+            env_vars: history.env_vars,
         });
     };
 

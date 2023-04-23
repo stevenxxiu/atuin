@@ -132,6 +132,7 @@ impl Importer for Resh {
                 session: uuid_v7().as_simple().to_string(),
                 hostname: entry.host,
                 deleted_at: None,
+                env_vars: None,
             })
             .await?;
         }

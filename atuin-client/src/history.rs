@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::env;
 
 use chrono::Utc;
@@ -17,6 +18,7 @@ pub struct History {
     pub session: String,
     pub hostname: String,
     pub deleted_at: Option<chrono::DateTime<Utc>>,
+    pub env_vars: Option<BTreeMap<String, String>>,
 }
 
 // Forgive me, for I have sinned
@@ -32,6 +34,7 @@ pub struct HistoryWithoutDelete {
     pub cwd: String,
     pub session: String,
     pub hostname: String,
+    pub env_vars: Option<BTreeMap<String, String>>,
 }
 
 impl History {
@@ -45,6 +48,7 @@ impl History {
         session: Option<String>,
         hostname: Option<String>,
         deleted_at: Option<chrono::DateTime<Utc>>,
+        env_vars: Option<BTreeMap<String, String>>,
     ) -> Self {
         let session = session
             .or_else(|| env::var("ATUIN_SESSION").ok())
@@ -62,6 +66,7 @@ impl History {
             session,
             hostname,
             deleted_at,
+            env_vars,
         }
     }
 

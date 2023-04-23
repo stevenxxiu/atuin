@@ -152,6 +152,7 @@ pub struct Settings {
     pub word_jump_mode: WordJumpMode,
     pub word_chars: String,
     pub scroll_context_lines: usize,
+    pub env_vars: Vec<String>,
     #[serde(with = "serde_regex", default = "RegexSet::empty")]
     pub history_filter: RegexSet,
 
@@ -342,6 +343,7 @@ impl Settings {
             )?
             .set_default("scroll_context_lines", 1)?
             .set_default("shell_up_key_binding", false)?
+            .set_default("env_vars", Vec::<String>::new())?
             .set_default("session_token", "")?
             .add_source(
                 Environment::with_prefix("atuin")

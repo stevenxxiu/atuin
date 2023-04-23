@@ -1,3 +1,4 @@
+use std::collections::BTreeMap;
 use std::env;
 use std::path::PathBuf;
 
@@ -84,6 +85,12 @@ pub fn get_current_dir() -> String {
             Err(_) => String::from(""),
         },
     }
+}
+
+pub fn get_env_vars(keys: &Vec<String>) -> BTreeMap<String, String> {
+    keys.into_iter()
+        .filter_map(|key| env::var(key).ok().map(|value| (key.to_string(), value)))
+        .collect()
 }
 
 pub fn get_days_from_month(year: i32, month: u32) -> i64 {

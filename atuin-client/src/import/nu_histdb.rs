@@ -39,6 +39,7 @@ impl From<HistDbEntry> for History {
             Some(format!("{:x}", histdb_item.session_id)),
             Some(String::from_utf8(histdb_item.hostname).unwrap()),
             None,
+            None,
         )
     }
 }

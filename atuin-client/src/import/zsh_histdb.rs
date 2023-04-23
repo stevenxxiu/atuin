@@ -81,6 +81,7 @@ impl From<HistDbEntry> for History {
                     .to_string(),
             ),
             None,
+            None,
         )
     }
 }

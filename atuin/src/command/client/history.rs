@@ -51,7 +51,6 @@ pub enum Cmd {
         #[arg(long)]
         cmd_only: bool,
 
-        /// Available variables: {command}, {directory}, {duration}, {user}, {host} and {time}.
         /// Example: --format "{time} - [{duration}] - {directory}$\t{command}"
         #[arg(long, short)]
         format: Option<String>,
@@ -66,7 +65,6 @@ pub enum Cmd {
         #[arg(long)]
         cmd_only: bool,
 
-        /// Available variables: {command}, {directory}, {duration}, {user}, {host} and {time}.
         /// Example: --format "{time} - [{duration}] - {directory}$\t{command}"
         #[arg(long, short)]
         format: Option<String>,
@@ -116,6 +114,7 @@ impl FormatKey for FmtHistory<'_> {
         match key {
             "command" => f.write_str(self.0.command.trim())?,
             "directory" => f.write_str(self.0.cwd.trim())?,
+            "env" => f.write_str(&serde_json::to_string(&self.0.env_vars).unwrap())?,
             "exit" => f.write_str(&self.0.exit.to_string())?,
             "duration" => {
                 let dur = Duration::from_nanos(std::cmp::max(self.0.duration, 0) as u64);
@@ -191,7 +190,19 @@ impl Cmd {
                 // store whatever is ran, than to throw an error to the terminal
                 let cwd = utils::get_current_dir();
 
-                let h = History::new(chrono::Utc::now(), command, cwd, -1, -1, None, None, None);
+                let env_vars = utils::get_env_vars(&settings.env_vars);
+
+                let h = History::new(
+                    chrono::Utc::now(),
+                    command,
+                    cwd,
+                    -1,
+                    -1,
+                    None,
+                    None,
+                    None,
+                    Some(env_vars),
+                );
 
                 // print the ID
                 // we use this as the key for calling end
